@@ -1,0 +1,11 @@
+flowchart TD
+    A[Planner] --> B[Executor]
+    B --> C[Evaluator]
+    C --> D{Accept output?}
+    D -- Yes --> E[Complete step]
+    D -- No --> F{Retry allowed?}
+    F -- Yes --> B
+    F -- No --> G[Escalate to supervisor]
+    G --> H{Fallback or human review?}
+    H -- Fallback --> I[Fallback path]
+    H -- Human review --> J[Human escalation]
