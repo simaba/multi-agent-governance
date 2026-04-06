@@ -2,7 +2,7 @@
 
 [![NIST AI RMF](https://img.shields.io/badge/NIST%20AI%20RMF-Aligned-0055A4?style=flat-square)](https://airc.nist.gov/home)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-[![Discussions](https://img.shields.io/badge/Discussions-Join-7289da?style=flat-square&logo=github)](https://github.com/simaba/multi-agent-governance-framework/discussions)
+[![Discussions](https://img.shields.io/badge/Discussions-Join-7289da?style=flat-square&logo=github)](https://github.com/simaba/multi-agent-governance/discussions)
 
 A governance framework for multi-agent AI systems — covering oversight, accountability,
 inter-agent trust, and risk management for systems where multiple AI agents collaborate
@@ -113,10 +113,10 @@ Key NIST AI RMF categories addressed:
 
 | Repository | Purpose |
 |---|---|
-| [agent-system-simulator](https://github.com/simaba/agent-system-simulator) | Simulate and evaluate multi-agent system behavior |
-| [multi-agent-orchestration-patterns](https://github.com/simaba/multi-agent-orchestration-patterns) | Orchestration design patterns for multi-agent pipelines |
-| [ai-agent-evaluation-framework](https://github.com/simaba/ai-agent-evaluation-framework) | Evaluation metrics and benchmarks for AI agents |
-| [enterprise-ai-governance-playbook](https://github.com/simaba/enterprise-ai-governance-playbook) | Organizational governance playbook |
-| [nist-ai-rmf-implementation-guide](https://github.com/simaba/nist-ai-rmf-implementation-guide) | NIST AI RMF practitioner guide |
+| [agent-system-simulator](https://github.com/simaba/agent-simulator) | Simulate and evaluate multi-agent system behavior |
+| [multi-agent-orchestration-patterns](https://github.com/simaba/agent-orchestration) | Orchestration design patterns for multi-agent pipelines |
+| [ai-agent-evaluation-framework](https://github.com/simaba/agent-eval) | Evaluation metrics and benchmarks for AI agents |
+| [enterprise-ai-governance-playbook](https://github.com/simaba/governance-playbook) | Organizational governance playbook |
+| [nist-ai-rmf-implementation-guide](https://github.com/simaba/nist-rmf-guide) | NIST AI RMF practitioner guide |
 
 *Maintained by [Sima Bagheri](https://github.com/simaba) · Connect on [LinkedIn](https://www.linkedin.com/in/simaba/)*
