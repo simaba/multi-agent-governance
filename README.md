@@ -119,4 +119,4 @@ Key NIST AI RMF categories addressed:
 | [enterprise-ai-governance-playbook](https://github.com/simaba/enterprise-ai-governance-playbook) | Organizational governance playbook |
 | [nist-ai-rmf-implementation-guide](https://github.com/simaba/nist-ai-rmf-implementation-guide) | NIST AI RMF practitioner guide |
 
-*Maintained by [Sima Bagheri](https://github.com/simaba) · Connect on [LinkedIn](https://www.linkedin.com/in/simabagheri)*
+*Maintained by [Sima Bagheri](https://github.com/simaba) · Connect on [LinkedIn](https://www.linkedin.com/in/simaba/)*
