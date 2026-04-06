@@ -1,96 +1,122 @@
 # Multi-Agent Governance Framework
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/simaba/multi-agent-governance-framework)](https://github.com/simaba/multi-agent-governance-framework/commits/main)
+[![NIST AI RMF](https://img.shields.io/badge/NIST%20AI%20RMF-Aligned-0055A4?style=flat-square)](https://airc.nist.gov/home)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+[![Discussions](https://img.shields.io/badge/Discussions-Join-7289da?style=flat-square&logo=github)](https://github.com/simaba/multi-agent-governance-framework/discussions)
 
-A structured framework for defining roles, decision authority, escalation logic, and accountability in multi-agent AI systems.
-
----
-
-## Why this exists
-
-Multi-agent systems often fail not because individual agents are weak, but because the system around them is poorly governed.
-
-Common failure modes:
-- Unclear agent roles lead to competing or redundant decisions
-- Missing escalation paths cause infinite loops or silent failures
-- Fragmented ownership means no one is accountable when the system misbehaves
-- Poor debuggability makes it impossible to trace which agent made which decision
+A governance framework for multi-agent AI systems — covering oversight, accountability,
+inter-agent trust, and risk management for systems where multiple AI agents collaborate
+or compete to complete tasks.
 
 ---
 
-## Governance structure
+## Why Multi-Agent Systems Need Dedicated Governance
 
-```mermaid
-flowchart TD
-    T[Task input] --> PL[Planner
-Defines approach and scope]
-    PL --> EX[Executor
-Carries out assigned work]
-    EX --> EV[Evaluator
-Assesses output quality]
-    EV -->|Pass| SV[Supervisor
-Authorises outcome]
-    EV -->|Fail| PL
-    SV -->|Accept| OUT[Output delivered]
-    SV -->|Escalate| HU[Human decision point]
-    SV -->|Retry| EX
+Single-agent AI systems are complex. Multi-agent systems compound that complexity:
+
+- **Emergent behavior** — agents interacting produce outcomes no single agent was designed for
+- **Diffuse accountability** — when multiple agents contribute to a decision, who is responsible?
+- **Trust propagation** — an agent that trusts a compromised agent can become an attack vector
+- **Cascading failures** — a single agent's failure can propagate through the entire pipeline
+- **Opaque reasoning** — chains of agent-to-agent communication are harder to audit than single-model decisions
+- **Goal misalignment** — individual agent objectives can conflict with system-level objectives
+
+---
+
+## Framework Components
+
+### 1. Agent Classification
+
+Before deploying a multi-agent system, classify each agent:
+
+| Dimension | Categories |
+|---|---|
+| **Role** | Orchestrator / Executor / Validator / Monitor |
+| **Trust Level** | Trusted / Semi-trusted / Untrusted (for external agents) |
+| **Autonomy Level** | Supervised / Semi-autonomous / Fully autonomous |
+| **Risk Class** | High / Medium / Low (based on possible impact of failure) |
+| **Data Access** | Read-only / Read-write / No access |
+
+### 2. Inter-Agent Trust Model
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    ORCHESTRATOR                          │
+│              (high trust, human-supervised)              │
+└──────────────────────┬──────────────────────────────────┘
+                       │ delegates tasks + validates outputs
+           ┌───────────┼───────────┐
+           ▼           ▼           ▼
+    ┌──────────┐ ┌──────────┐ ┌──────────┐
+    │ AGENT A  │ │ AGENT B  │ │ AGENT C  │
+    │(executor)│ │(executor)│ │(validator│
+    │semi-trust│ │semi-trust│ │high-trust│
+    └──────────┘ └──────────┘ └──────────┘
+           │                       │
+           ▼                       ▼
+    ┌──────────┐             ┌──────────┐
+    │EXTERNAL  │             │ HUMAN    │
+    │  TOOL    │             │ REVIEW   │
+    │(untrusted│             │(required │
+    │ sandbox) │             │for high  │
+    └──────────┘             │  risk)   │
+                             └──────────┘
 ```
 
----
+### 3. Governance Gates for Multi-Agent Systems
 
-## What's covered
+| Gate | Timing | Requirements |
+|---|---|---|
+| **System Design Review** | Before development | Agent roles, trust model, and failure modes documented |
+| **Individual Agent Validation** | Before integration | Each agent validated independently |
+| **Integration Testing** | Before staging | End-to-end scenarios including failure injection |
+| **Red Team** | Before production | Adversarial scenarios: prompt injection, agent hijacking, goal manipulation |
+| **Human Oversight Check** | Before production | Human review points defined for all high-risk decision paths |
+| **Monitoring Activation** | At deployment | Per-agent and system-level monitoring configured |
 
-| Topic | Document |
-|-------|---------|
-| Agent role definitions | `docs/agent-roles.md` |
-| Decision flow between agents | `docs/decision-flow.md` |
-| Escalation logic and stop conditions | `docs/escalation-logic.md` |
-| Accountability mapping | `docs/accountability-mapping.md` |
-| Design rules and guardrails | `docs/design-rules.md` |
-| Governance review checklist | `templates/governance-review-checklist.md` |
-| Worked example: research assistant | `examples/research-assistant-system.md` |
+### 4. Accountability Framework
 
----
+For every multi-agent system, document:
 
-## Who this is for
+- **System Owner** — the person accountable for the system's overall behavior
+- **Agent Ownership Map** — named owner for each agent in the system
+- **Decision Attribution** — how to trace a system output to the contributing agents
+- **Failure Responsibility** — who is notified and responsible when which agent fails
+- **Audit Trail Requirements** — what gets logged, at which agent, for how long
 
-- Builders of LLM workflows and agent pipelines
-- AI platform and systems engineers
-- Product managers designing agentic systems
-- Governance, operations, and risk leads
+### 5. Monitoring Requirements
 
----
-
-## Design principle
-
-> A multi-agent system should behave like a controlled operating model, not a collection of loosely connected prompts.
-
----
-
-## Companion repositories
-
-- **[Agent System Simulator](https://github.com/simaba/agent-system-simulator)** — runnable implementation of the roles and patterns described here
-- **[Multi-Agent Orchestration Patterns](https://github.com/simaba/multi-agent-orchestration-patterns)** — structural interaction patterns to use within this governance framework
+| Metric | Frequency | Alerting Threshold |
+|---|---|---|
+| Task completion rate | Real-time | Drop > 10% from baseline |
+| Inter-agent latency | Real-time | P99 > configured SLA |
+| Agent error rate | Real-time | Error rate > 1% |
+| Goal drift (planned vs. actual) | Per task | Configurable by use case |
+| Token usage / cost | Hourly | > 150% of daily budget |
+| Human escalation rate | Daily | > 20% increase week-over-week |
 
 ---
 
-## Related repositories
+## NIST AI RMF Alignment
 
-This repository is part of a connected toolkit for responsible AI operations:
+Full mapping: [docs/nist-rmf-mapping.md](docs/nist-rmf-mapping.md)
+
+Key NIST AI RMF categories addressed:
+- **GV.4** — Human oversight for high-autonomy agent decisions
+- **MP.3** — Risk categorization specific to multi-agent emergent behavior
+- **MS.2** — Ongoing monitoring of per-agent and system-level metrics
+- **MG.4** — Rollback and recovery procedures for individual agents and full systems
+
+---
+
+## Ecosystem
 
 | Repository | Purpose |
-|-----------|---------|
-| [Enterprise AI Governance Playbook](https://github.com/simaba/enterprise-ai-governance-playbook) | End-to-end AI operating model from intake to improvement |
-| [AI Release Governance Framework](https://github.com/simaba/ai-release-governance-framework) | Risk-based release gates for AI systems |
-| [AI Release Readiness Checklist](https://github.com/simaba/ai-release-readiness-checklist) | Risk-tiered pre-release checklists with CLI tool |
-| [AI Accountability Design Patterns](https://github.com/simaba/ai-accountability-design-patterns) | Patterns for human oversight and escalation |
-| [Multi-Agent Governance Framework](https://github.com/simaba/multi-agent-governance-framework) | Roles, authority, and escalation for agent systems |
-| [Multi-Agent Orchestration Patterns](https://github.com/simaba/multi-agent-orchestration-patterns) | Sequential, parallel, and feedback-loop patterns |
-| [AI Agent Evaluation Framework](https://github.com/simaba/ai-agent-evaluation-framework) | System-level evaluation across 5 dimensions |
-| [Agent System Simulator](https://github.com/simaba/agent-system-simulator) | Runnable multi-agent simulator with governance controls |
-| [LLM-powered Lean Six Sigma](https://github.com/simaba/LLM-powered-Lean-Six-Sigma) | AI copilot for structured process improvement |
+|---|---|
+| [agent-system-simulator](https://github.com/simaba/agent-system-simulator) | Simulate and evaluate multi-agent system behavior |
+| [multi-agent-orchestration-patterns](https://github.com/simaba/multi-agent-orchestration-patterns) | Orchestration design patterns for multi-agent pipelines |
+| [ai-agent-evaluation-framework](https://github.com/simaba/ai-agent-evaluation-framework) | Evaluation metrics and benchmarks for AI agents |
+| [enterprise-ai-governance-playbook](https://github.com/simaba/enterprise-ai-governance-playbook) | Organizational governance playbook |
+| [nist-ai-rmf-implementation-guide](https://github.com/simaba/nist-ai-rmf-implementation-guide) | NIST AI RMF practitioner guide |
 
----
-
-*Shared in a personal capacity. Open to collaborations and feedback — connect on [LinkedIn](https://linkedin.com/in/simaba) or [Medium](https://medium.com/@bagheri.sima).*
+*Maintained by [Sima Bagheri](https://github.com/simaba) · Connect on [LinkedIn](https://www.linkedin.com/in/simabagheri)*
