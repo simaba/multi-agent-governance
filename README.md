@@ -1,6 +1,6 @@
 # Multi-Agent Governance Framework
 
-[![NIST AI RMF](https://img.shields.io/badge/NIST%20AI%20RMF-Aligned-0055A4?style=flat-square)](https://airc.nist.gov/home)
+[![NIST AI RMF](https://img.shields.io/badge/NIST%20AI%20RMF-Informed-0055A4?style=flat-square)](https://airc.nist.gov/home)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 [![Discussions](https://img.shields.io/badge/Discussions-Join-7289da?style=flat-square&logo=github)](https://github.com/simaba/multi-agent-governance/discussions)
 
@@ -113,9 +113,11 @@ For every multi-agent system, document:
 
 ---
 
-## NIST AI RMF alignment
+## NIST AI RMF practitioner mapping
 
 Full mapping: [docs/nist-rmf-mapping.md](docs/nist-rmf-mapping.md)
+
+This is a practitioner cross-reference intended to help organize governance artifacts and discussions. It is not an official NIST assessment, formal conformity determination, certification, or endorsement.
 
 Key NIST AI RMF categories addressed:
 
